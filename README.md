@@ -1,3 +1,7 @@
+> Forked from [buildthingsuseful/build-your-own-kafka](https://github.com/buildthingsuseful/build-your-own-kafka) (MIT licensed).
+>
+> **What I fixed and ran:** the original repo's Java source lived directly in `com/`, but with no `src/main/java` layout Maven silently compiled zero classes (still reported `BUILD SUCCESS`). I moved the code to the standard `src/main/java/com/...` path so it actually builds, then ran a real 3-broker cluster locally end to end: ZooKeeper coordination, controller election, topic/partition creation with leader-follower replication, and produce/consume across partitions.
+
 # Building Your Own Kafka-like System From Scratch: A Step-by-Step Guide
 
 If you're looking to truly understand Kafka's architecture by implementing a simplified version yourself, you've come to the right place. Rather than just copying code, we'll build SimpleKafka incrementally, understanding each component as we go. This approach will give you a deep understanding of distributed messaging systems.
@@ -44,23 +48,23 @@ zookeeper-server-start zk.cfg
 ### 3. Start Multiple Broker Instances
 ```shell
 # Terminal 1 - Broker 1
-java -cp target/simple-kafka-1.0-SNAPSHOT.jar com.simplekafka.broker.SimpleKafkaBroker 1 localhost 9091 2181
+java -cp target/build-your-own-kafka-1.0-SNAPSHOT.jar com.simplekafka.broker.SimpleKafkaBroker 1 localhost 9091 2181
 
 # Terminal 2 - Broker 2
-java -cp target/simple-kafka-1.0-SNAPSHOT.jar com.simplekafka.broker.SimpleKafkaBroker 2 localhost 9092 2181
+java -cp target/build-your-own-kafka-1.0-SNAPSHOT.jar com.simplekafka.broker.SimpleKafkaBroker 2 localhost 9092 2181
 
 # Terminal 3 - Broker 3
-java -cp target/simple-kafka-1.0-SNAPSHOT.jar com.simplekafka.broker.SimpleKafkaBroker 3 localhost 9093 2181
+java -cp target/build-your-own-kafka-1.0-SNAPSHOT.jar com.simplekafka.broker.SimpleKafkaBroker 3 localhost 9093 2181
 ```
 
 ### 4. Produce Messages
 ```shell
-java -cp target/simple-kafka-1.0-SNAPSHOT.jar com.simplekafka.client.SimpleKafkaProducer localhost 9091 test-topic
+java -cp target/build-your-own-kafka-1.0-SNAPSHOT.jar com.simplekafka.client.SimpleKafkaProducer localhost 9091 test-topic
 ```
 
 ### 5. Consume Messages
 ```shell
-java -cp target/simple-kafka-1.0-SNAPSHOT.jar com.simplekafka.client.SimpleKafkaConsumer localhost 9091 test-topic 0
+java -cp target/build-your-own-kafka-1.0-SNAPSHOT.jar com.simplekafka.client.SimpleKafkaConsumer localhost 9091 test-topic 0
 ```
 
 ### Key Concepts to Focus On During Testing
